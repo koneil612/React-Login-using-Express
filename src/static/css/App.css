@@ -1,0 +1,12 @@
+#signup {
+    text-align: center;
+    font-size: 20px;
+    padding: 30px;
+    max-width: 60%;
+    background-color: #53868b;
+    margin: 40px;
+}
+
+#fname, #lname, #email, #password, #confirm {
+    font-size: 20px;
+}
