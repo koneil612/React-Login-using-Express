@@ -39,13 +39,21 @@ function Greeting(props) {
 class Header extends React.Component {
     constructor() {
         super();
+        this.state={
+            isLoggedIn: false,
+            email: "",
+            password: ""
+        }
         this.handleLoginClick = this.handleLoginClick.bind(this);
         this.handleLogoutClick = this.handleLogoutClick.bind(this);
         this.handleSignUpClick = this.handleSignUpClick.bind(this);
+        this.handlePasswordChange= this.handlePasswordChange.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
     }
 
-    handleLoginClick() {
-        this.props.doLogin();
+    handleLoginClick(event) {
+        this.props.doLogin(this.state.email,this.state.password);
+        event.preventDefault();
     }
 
     handleLogoutClick() {
@@ -56,6 +64,13 @@ class Header extends React.Component {
         this.props.doSignup();
     }
 
+    handleEmailChange(event) {
+      this.setState({email: event.target.value});
+    }
+
+    handlePasswordChange(event) {
+      this.setState({password: event.target.value});
+    }
 
   render() {
       const isLoggedIn = this.props.isLoggedIn;
@@ -75,7 +90,13 @@ class Header extends React.Component {
       <div className="Header">
         <Greeting isLoggedIn={this.props.isLoggedIn} />
         {button}
+        <form>
+         <div className="signin">
+            <input placeholder="Email" type="text" id="email" value={this.state.email} onChange={this.handleEmailChange}/>
+            <input placeholder="Password" type="password" value={this.state.password} onChange={this.handlePasswordChange}/>
+        </div>
         {loginbutton} {signupbutton}
+        </form>
       </div>
 
   );

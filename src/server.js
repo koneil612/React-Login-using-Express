@@ -1,5 +1,5 @@
 'use strict';
-
+const bodyParser = require('body-parser');
 import path from 'path';
 import { Server } from 'http';
 import Express from 'express';
@@ -9,18 +9,46 @@ import { match, RouterContext } from 'react-router';
 import routes from './routes';
 import NotFoundPage from './components/NotFoundPage';
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/react');
+
+
+const Schema = mongoose.Schema;
+
+// Define the user schema'
+const userSchema = new Schema({
+    fName: { type: String, required: true },
+    lName: {type: String, required: true },
+    email: {type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    });
+
+// Create a User model with defined schema
+const User = mongoose.model("User", userSchema);
+
+
 // initialize the server and configure support for ejs templates
 const app = new Express();
 const server = new Server(app);
+app.use(bodyParser.json());
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // define the folder that will be used for static assets
 app.use(Express.static(path.join(__dirname, 'static')));
 
-app.get("/login",function(req,res){
-
-    res.send("Do your login");
+app.post("/login",function(req,res){
+    var password = req.body.password;
+    User.findOne({email: req.body.email})
+        .then(function (result) {
+            if (result.password == password) {
+                console.log("Login Authenticated");
+                res.send({"login":true});
+            } else  {
+                console.log("Authentication Failed");}
+                res.send({"login":false});
+        });
 });
 
 // universal routing and rendering

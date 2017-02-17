@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import Switch, {Case, Default} from 'react-switch-case';
 import Header from './Header';
-// import './App.css';
+import axios from 'axios';
+// import './static/css/App.css';
 
 
 export default class App extends React.Component {
@@ -10,24 +11,36 @@ export default class App extends React.Component {
         super();
         this.state = {
             isLoggedIn: false,
-            user: "",
-            pswd: "",
+            email: "",
+            password: "",
             page:""
         };
         this.doLogin = this.doLogin.bind(this);
         this.doLogout = this.doLogout.bind(this);
         this.doSignup = this.doSignup.bind(this);
 
-
     }
 
-    doLogin(){
-        this.setState({isLoggedIn: true, page:"signin"});
+    doLogin(email,password){
+        console.log("doLogin");
+        axios.post(`/login`, {
+        email: email,
+        password: password
+        })
+
+          .then(res => {
+            console.log(res);
+            if(res.data.login){
+                console.log("logging in user");
+                this.setState({isLoggedIn: true, page:"signin"});
+            }
+          });
     }
 
     doLogout(){
         this.setState({isLoggedIn: false, page:"greeting"});
     }
+
 
     doSignup(){
         console.log('want to sign up');
@@ -47,8 +60,6 @@ export default class App extends React.Component {
       <Switch condition={page}>
       <Case value='signup'><SignUp />
       </Case>
-      <Case value='signin'><SignIn />
-      </Case>
       </Switch>
       </div>
     );
@@ -58,31 +69,31 @@ export default class App extends React.Component {
 function SignUp(props) {
     return(
         <div>
-            <form onSubmit="something will happen">
-             <div id="signup">
+            <form>
+             <div class="signup">
                 <p><input placeholder="First Name" type="text" id="fname"/></p>
                 <p><input placeholder="Last Name" type="text" id="lname"/></p>
                 <p><input placeholder="Email" type="text" id="email"/> </p>
                 <p><input placeholder="Password" type="password" id="password"/></p>
                 <p><input placeholder="Confirm Password" type="text" id="confirm"/></p>
-            <button id="send"> Send</button>
+            <button id="send"> Sign Up</button>
             </div>
             </form>
         </div>
         )
 }
 
-function SignIn(props) {
-    return(
-        <div>
-            <form onSubmit="something will happen">
-             <div id="signin">
-                <input placeholder="Email" type="text" id="email"/>
-                <input placeholder="Password" type="password" id="password"/>
-                <input placeholder="Confirm Password" type="text" id="confirm"/>
-            <button id="send"> Send</button>
-            </div>
-            </form>
-        </div>
-        )
-}
+//
+// function SignIn(props) {
+//     return(
+//         <div>
+//             <form>
+//              <div id="signin">
+//                 <input placeholder="Email" type="text" id="email"/>
+//                 <input placeholder="Password" type="password" id="password"/>
+//             <button id="send"> Send</button>
+//             </div>
+//             </form>
+//         </div>
+//         )
+// }
