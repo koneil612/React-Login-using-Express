@@ -20,11 +20,11 @@ function LogoutButton(props) {
 }
 
 function UserGreeting(props) {
-    return <h1> Hello Again </h1>;
+    return <h1> Hello {fname} </h1>;
 }
 
 function GuestGreeting(props) {
-    return <h1> Welcome! Please Login or Sign Up to continue </h1>;
+    return <h1> Welcome! <br/> Please Login or Sign Up to continue </h1>;
 }
 
 function Greeting(props) {
@@ -93,7 +93,7 @@ class Header extends React.Component {
         <form>
          <div className="signin">
             <input placeholder="Email" type="text" id="email" value={this.state.email} onChange={this.handleEmailChange}/>
-            <input placeholder="Password" type="password" value={this.state.password} onChange={this.handlePasswordChange}/>
+            <input placeholder="Password" type="password" id="password" value={this.state.password} onChange={this.handlePasswordChange}/>
         </div>
         {loginbutton} {signupbutton}
         </form>

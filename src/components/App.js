@@ -29,7 +29,6 @@ export default class App extends React.Component {
         })
 
           .then(res => {
-            console.log(res);
             if(res.data.login){
                 console.log("logging in user");
                 this.setState({isLoggedIn: true, page:"signin"});
@@ -41,10 +40,10 @@ export default class App extends React.Component {
         this.setState({isLoggedIn: false, page:"greeting"});
     }
 
-
     doSignup(){
-        console.log('want to sign up');
-        this.setState({page: "signup"});
+        console.log("doSignup");
+        // this.setState({page:"signup"});
+        <SignUp />
         }
 
 
@@ -57,16 +56,14 @@ export default class App extends React.Component {
       <div className="App">
       <Header isLoggedIn={this.state.isLoggedIn} doLogin={this.doLogin} doLogout={this.doLogout} doSignup={this.doSignup}/>
       <br/> <hr/>
-      <Switch condition={page}>
-      <Case value='signup'><SignUp />
-      </Case>
-      </Switch>
+
+
       </div>
     );
   }
 }
 
-function SignUp(props) {
+function SignUp() {
     return(
         <div>
             <form>
