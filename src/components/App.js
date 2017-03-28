@@ -43,7 +43,7 @@ export default class App extends React.Component {
     doSignup(){
         console.log("doSignup");
         // this.setState({page:"signup"});
-        <SignUp />
+        // <SignUp />
         }
 
 
@@ -56,8 +56,6 @@ export default class App extends React.Component {
       <div className="App">
       <Header isLoggedIn={this.state.isLoggedIn} doLogin={this.doLogin} doLogout={this.doLogout} doSignup={this.doSignup}/>
       <br/> <hr/>
-
-
       </div>
     );
   }
